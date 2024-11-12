@@ -71,7 +71,7 @@ def medir_time(algoritmo,random_l, n:int, k= 1000):
     A = False
     t1 = time.time_ns()
     x = random_l(n)
-    if len(x) >= 2:
+    if type(x) == tuple:
         algoritmo(*x)
     else:
         algoritmo(x)    
