@@ -5,6 +5,9 @@ import numpy as np
 import time
 import pandas as pd
 
+def matrix_P(n):
+     return to_adjacency_matrix(*create_graph(n))
+
 def to_adjacency_matrix(V, E):
     M = np.zeros((len(V), len(V)), dtype=int)
     for i,j,w in E:
@@ -68,7 +71,10 @@ def medir_time(algoritmo,random_l, n:int, k= 1000):
     A = False
     t1 = time.time_ns()
     x = random_l(n)
-    algoritmo(x)
+    if len(x) >= 2:
+        algoritmo(*x)
+    else:
+        algoritmo(x)    
     t2 = time.time_ns()
     t = t2-t1
     if t < 500000:
@@ -198,7 +204,17 @@ def datos(title,algoritmo, random_l,O_min, O_nor, O_max, d = 100, rep = 7, excel
     if excel:
         data.to_excel(str(title)+".xlsx", index= False)
 
+def tabla():
+    print("Metodo: ")
+    for i in (1,2):
+        if i == 1:
+            datos("Tabla_prim", prim, random_l= matrix_P, O_min= 2, O_nor= 1, O_max= 3, excel= False)  
+        elif i == 2:
+            datos("Tabla_Kruskal", kruskal,random_l= create_graph, O_min= 2, O_nor= 1, O_max= 3, excel= False)  
+
+def main():
+    tabla()
+
 
 if __name__ == "__main__":
-    (V, E) = create_graph(20)
-    print(to_adjacency_matrix(V, E))
+    main()
