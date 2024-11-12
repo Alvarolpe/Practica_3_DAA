@@ -82,7 +82,10 @@ def medir_time(algoritmo,random_l, n:int, k= 1000):
         t1 = time.time_ns()
         for i in range(k):
             x = random_l(n)
-            algoritmo(x)
+               if type(x) == tuple:
+                  algoritmo(*x)
+               else:
+                  algoritmo(x)            
         t2 = time.time_ns()
         T1 = t2 - t1
         t1 = time.time_ns()
@@ -184,21 +187,27 @@ def datos(title,algoritmo, random_l,O_min, O_nor, O_max, d = 100, rep = 7, excel
     .xlsx
     
     '''
-    data = pd.DataFrame(columns=['n', 'Time(ns)','More_tests?',
-                                 "t(n)/O("+convert_n(0,O_min,True)+ ")",
-                                 "t(n)/O("+convert_n(0,O_nor,True)+")",
-                                 "t(n)/O("+convert_n(0,O_max,True)+")"])
+    n = []
+    t = []
+    A = []
+    O_min_aux = []
+    O_nor_aux = []
+    O_max_aux = []
+
     for i in range(rep):
-        n = (2**(i))*d
-        (t,A) = medir_time(algoritmo,random_l, n)
-        O_min_aux= t/convert_n(n,O_min,False)
-        O_nor_aux= t/convert_n(n,O_nor,False)
-        O_max_aux= t/convert_n(n,O_max,False)
-        data = data.append({"n": n, 'Time(ns)': t, 'More_tests?': A,
-                            "t(n)/O("+convert_n(0,O_min,True)+ ")": O_min_aux,
-                            "t(n)/O("+convert_n(0,O_nor,True)+")": O_nor_aux,
-                            "t(n)/O("+convert_n(0,O_max,True)+")": O_max_aux},
-                            ignore_index=True)
+        ni = (2**(i))*d
+        n.append(ni)
+        (ti,Ai) = medir_time(algoritmo,random_l, ni)
+        t.append(ti)
+        A.append(Ai)
+        O_min_aux.append(ti/convert_n(ni,O_min,False))
+        O_nor_aux.append(ti/convert_n(ni,O_nor,False))
+        O_max_aux.append(ti/convert_n(ni,O_max,False))
+        
+    data = pd.DataFrame({'n': n, 'Time(ns)': t,'Average': A,
+                        "t(n)/O("+convert_n(0,O_min,True)+ ")": O_min_aux,
+                        "t(n)/O("+convert_n(0,O_nor,True)+")": O_nor_aux,
+                        "t(n)/O("+convert_n(0,O_max,True)+")": O_max_aux})
     print(data)
 
     if excel:
