@@ -1,7 +1,7 @@
 def find(u, S):
-    u_S = S[u-1]
-    while u_S != S[u_S-1]:
-        u_S = S[u_S-1]
+    u_S = S[u]
+    while u_S != S[u_S]:
+        u_S = S[u_S]
     return u_S
 
 def merge(u, v_S, S):
@@ -16,7 +16,7 @@ def kruskal (V,E):
     E = sorted(E, key = lambda arist: arist[2]) #algoritmo que ordena las aristas (u,v,w) por w
     T = set()
     n= len(V)
-    S = list(range(1,n+1))
+    S = list(range(0,n))
     pos = 0
     while len(T) < n-1:
         (u,v,w) = E[pos]
