@@ -32,7 +32,7 @@ def create_graph(n, max_distance=50, adjacency_matrix=False):
         return M
     return to_vertices_and_edges(M)
 
-def medir_time(algoritmo,random_l, n:int, k= 1000):
+def medir_time(algoritmo,random_l, n:int, k= 1000,alw_avg = False):
     '''
     Mide el tiempo que tarda un algoritmo en ordenar la lista de n elementos
     random_l que puede ser aleatoria, descendente o ascendente.
@@ -77,7 +77,7 @@ def medir_time(algoritmo,random_l, n:int, k= 1000):
         algoritmo(x)    
     t2 = time.time_ns()
     t = t2-t1
-    if t < 500000:
+    if t < 500000 or alw_avg:
         A = True
         t1 = time.time_ns()
         for i in range(k):
@@ -197,7 +197,7 @@ def datos(title,algoritmo, random_l,O_min, O_nor, O_max, d = 100, rep = 7, excel
     for i in range(rep):
         ni = (2**(i))*d
         n.append(ni)
-        (ti,Ai) = medir_time(algoritmo,random_l, ni)
+        (ti,Ai) = medir_time(algoritmo,random_l, ni,alw_avg = True,k= 100)
         t.append(ti)
         A.append(Ai)
         O_min_aux.append(ti/convert_n(ni,O_min,False))
