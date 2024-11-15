@@ -1,10 +1,49 @@
 def find(u, S):
+    """
+    Busca el elemento u en la lista S
+
+    Parameters
+    ----------
+    u : TYPE
+        int
+        DESCRIPTION
+        posición a buscar
+    S : TYPE
+        list
+        DESCRIPTION
+        set en el que se buscará
+
+    Returns
+    -------
+    u_S : TYPE
+          int
+          DESCRIPTION
+          valor buscado en la lista
+    """
     u_S = S[u]
     while u_S != S[u_S]:
         u_S = S[u_S]
     return u_S
 
 def merge(u, v_S, S):
+    """
+    Busca el elemento u en la lista S, y sustituye la u_S por el valor v_S
+
+    Parameters
+    ----------
+    u : TYPE
+        int
+        DESCRIPTION
+        posición a buscar
+    v_s : TYPE
+          int
+          DESCRIPTION
+          valor a sustituir
+    S : TYPE
+        list
+        DESCRIPTION
+        set en el que se buscará
+    """
     u_S = S[u]
     while u_S != S[u_S]:
         aux = S[u_S]
@@ -13,6 +52,27 @@ def merge(u, v_S, S):
     S[u_S] = v_S
 
 def kruskal (V,E):
+    """
+    Genera el arbol expandido mínimo a portir de un grafo dado po el metodo de Kruskal
+
+    Parameters
+    ----------
+    V : TYPE
+        set
+        DESCRIPTION
+        número de vertices del grafo
+    E : TYPE
+        set
+        DESCRIPTION
+        aristas que conforman el grafo
+
+    Returns
+    -------
+    T : TYPE
+        set
+        DESCRIPTION
+        set formado por las aristas que forman el arbol expandido mínimo
+    """
     E = sorted(E, key = lambda arist: arist[2]) #algoritmo que ordena las aristas (u,v,w) por w
     T = set()
     n= len(V)
@@ -29,6 +89,22 @@ def kruskal (V,E):
     return T
 
 def prim (M: np.matrix):
+    """
+    Genera el arbol expandido mímimo a partir de una matriz de adyacencias dada por el metodo de prim
+
+    Parameters
+    ----------
+    M : TYPE
+        nparray
+        DESCRIPTION
+        matriz de adyacencias de un grafo
+    Returns
+    -------
+    T : TYPE
+        set
+        DESCRIPTION
+        set formado por las aristas que forman el arbol expandido mínimo
+    """
     n = len(M[1])
     mindist = np.repeat(0, n)
     nearest = np.repeat(0, n)
